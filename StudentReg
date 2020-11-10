@@ -1,0 +1,33 @@
+#Stored Procedure for insertion update Delete ONSubmit
+
+create Procedure StudentRegister  
+(  
+  --variable  declareations   
+ @Action Varchar (10),    
+ @id int=null,    
+ @Name Varchar (50)=null,   
+ @Mobile Varchar (50)=null,   
+ @Class Varchar (50)=null,
+ @Year Varchar  (50)=null 
+)  
+as  
+Begin   
+  SET NOCOUNT ON;  
+  
+If @Action='Insert'    
+Begin  
+   Insert Into StudentDetails1 (Name,Mobile,Class,Year)values(@Name, @Mobile, @Class, @Year)  
+End    
+else if @Action='Select'   
+Begin  
+    select *from StudentDetails1  
+end  
+else if @Action='Update'  
+Begin  
+   update StudentDetails1 Name=@Fname,Mobile=@Mobile,Class=@Class,Year=@Year where ID=@id  
+ End  
+ Else If @Action='delete' 
+ Begin  
+   delete from StudentDetails1 where ID=@id  
+ end  
+End
