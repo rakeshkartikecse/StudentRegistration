@@ -1,0 +1,6 @@
+C:\Users\DPTLR7\documents\visual studio 2013\Projects\DataListExample\DataListExample\bin\DataListExample.dll.config
+C:\Users\DPTLR7\documents\visual studio 2013\Projects\DataListExample\DataListExample\bin\DataListExample.dll
+C:\Users\DPTLR7\documents\visual studio 2013\Projects\DataListExample\DataListExample\bin\DataListExample.pdb
+C:\Users\DPTLR7\documents\visual studio 2013\Projects\DataListExample\DataListExample\obj\Debug\DataListExample.dll
+C:\Users\DPTLR7\documents\visual studio 2013\Projects\DataListExample\DataListExample\obj\Debug\DataListExample.pdb
+C:\Users\DPTLR7\documents\visual studio 2013\Projects\DataListExample\DataListExample\obj\Debug\DataListExample.csprojResolveAssemblyReference.cache
