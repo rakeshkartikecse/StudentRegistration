@@ -67,7 +67,7 @@
            
             <br />
            <asp:GridView ID="GridView1" runat="server" DataKeyNames ="ID" OnRowEditing ="GridView1_RowEditing"  BorderColor="Yellow" BackColor="#FFCCFF"              
-        OnRowCancelingEdit ="GridView1_RowCancelingEdit"    OnRowDeleting ="GridView1_RowDeleting"    OnRowUpdating = "GridView1_RowUpdating" OnSelectedIndexChanged="GridView1_SelectedIndexChanged" AllowPaging="true" PageSize="10" >
+        OnRowCancelingEdit ="GridView1_RowCancelingEdit"    OnRowDeleting ="GridView1_RowDeleting"    OnRowUpdating = "GridView1_RowUpdating" OnSelectedIndexChanged="GridView1_SelectedIndexChanged"  PageSize="10" >
                <Columns>
                    <asp:CommandField ShowDeleteButton="True" ShowEditButton="True" />
                </Columns>

@@ -81,13 +81,24 @@ namespace DataListExample
             cmd = new SqlCommand(query1, con);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@Action", HiddenField1.Value.ToString());
-            cmd.Parameters.AddWithValue("@Name", ((TextBox)GridView1.Rows[e.RowIndex].Cells[2].Controls[0]).Text.ToString());
+            /*cmd.Parameters.AddWithValue("@Name", ((TextBox)GridView1.Rows[e.RowIndex].Cells[2].Controls[0]).Text.ToString());
             cmd.Parameters.AddWithValue("Mobile", ((TextBox)GridView1.Rows[e.RowIndex].Cells[3].Controls[0]).Text.ToString());
             cmd.Parameters.AddWithValue("Class", ((TextBox)GridView1.Rows[e.RowIndex].Cells[4].Controls[0]).Text.ToString());
-            cmd.Parameters.AddWithValue("Year", ((TextBox)GridView1.Rows[e.RowIndex].Cells[5].Controls[0]).Text.ToString());
+            cmd.Parameters.AddWithValue("Year", ((TextBox)GridView1.Rows[e.RowIndex].Cells[5].Controls[0]).Text.ToString());*/
             cmd.Parameters.AddWithValue("ID", SqlDbType.Int).Value = id;
+            name.Text = ((TextBox)GridView1.Rows[e.RowIndex].Cells[2].Controls[0]).Text.ToString();
+            mobile.Text = ((TextBox)GridView1.Rows[e.RowIndex].Cells[3].Controls[0]).Text.ToString();
+            DropDownList1.Text = ((TextBox)GridView1.Rows[e.RowIndex].Cells[4].Controls[0]).Text.ToString();
+            DropDownList2.Text = ((TextBox)GridView1.Rows[e.RowIndex].Cells[5].Controls[0]).Text.ToString();
+            cmd.Parameters.AddWithValue("@Name", name.Text);
+            cmd.Parameters.AddWithValue("@Mobile", mobile.Text);
+            cmd.Parameters.AddWithValue("@Class", DropDownList1.SelectedValue.ToString());
+            cmd.Parameters.AddWithValue("@Year", DropDownList2.SelectedValue.ToString());
+
             cmd.ExecuteNonQuery();
             con.Close();
+            showOnSuccess.Visible = true;
+            showOnSuccess.Text = "Sucessfully updatedd!";
             GridView1.EditIndex = -1;
             gbind();
         }
