@@ -13,7 +13,7 @@
         <table>
             <tr>
                 <td>First Name:</td>
-            <td><asp:TextBox ID="fname" runat="server" Text="First Name"></asp:TextBox></td>
+            <td><asp:TextBox ID="fname" runat="server" ></asp:TextBox></td>
                 <td><asp:RequiredFieldValidator ID="validfname" runat="server" ControlToValidate="fname" ErrorMessage="Please Enter" ForeColor="#ff0066"></asp:RequiredFieldValidator></td>
 
             </tr>
@@ -59,8 +59,15 @@
     
     <br />
     <br />
-    <asp:Label ID="loginLabel" runat="server" Text="Registered User, Then Login Here" BackColor="YellowGreen"></asp:Label>
+         <asp:Label ID="loginLabel" runat="server" Text="Registered User, Then Login Here" BackColor="YellowGreen"></asp:Label>
     <asp:Button ID="login" runat="server" Text="Login" OnClick="login_Click"/>
+    
         </form>
+    <div>
+       
+           
+        
+        
+    </div>
 </body>
 </html>

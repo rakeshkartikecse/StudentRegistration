@@ -43,13 +43,16 @@ namespace DataListExample
 
         protected void GridView1_RowEditing(object sender, GridViewEditEventArgs e)
         {
-            GridView1.EditIndex = e.NewEditIndex;
-            gbind();
+           // GridView1.EditIndex = e.NewEditIndex;
+            //gbind();
         }
+
+        
 
         protected void GridView1_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
         {
             GridView1.EditIndex = -1;
+
             gbind();
         }
 
@@ -73,7 +76,7 @@ namespace DataListExample
 
         }
 
-        protected void GridView1_RowUpdating(object sender, GridViewUpdateEventArgs e)
+       /* protected void GridView1_RowUpdating(object sender, GridViewUpdateEventArgs e)
         {
             int id=int.Parse(GridView1.DataKeys[e.RowIndex].Value.ToString());
             HiddenField1.Value = "Update";
@@ -85,7 +88,7 @@ namespace DataListExample
             cmd.Parameters.AddWithValue("Mobile", ((TextBox)GridView1.Rows[e.RowIndex].Cells[3].Controls[0]).Text.ToString());
             cmd.Parameters.AddWithValue("Class", ((TextBox)GridView1.Rows[e.RowIndex].Cells[4].Controls[0]).Text.ToString());
             cmd.Parameters.AddWithValue("Year", ((TextBox)GridView1.Rows[e.RowIndex].Cells[5].Controls[0]).Text.ToString());*/
-            cmd.Parameters.AddWithValue("ID", SqlDbType.Int).Value = id;
+         /*   cmd.Parameters.AddWithValue("ID", SqlDbType.Int).Value = id;
             name.Text = ((TextBox)GridView1.Rows[e.RowIndex].Cells[2].Controls[0]).Text.ToString();
             mobile.Text = ((TextBox)GridView1.Rows[e.RowIndex].Cells[3].Controls[0]).Text.ToString();
             DropDownList1.Text = ((TextBox)GridView1.Rows[e.RowIndex].Cells[4].Controls[0]).Text.ToString();
@@ -101,10 +104,12 @@ namespace DataListExample
             showOnSuccess.Text = "Sucessfully updatedd!";
             GridView1.EditIndex = -1;
             gbind();
-        }
+        }*/
 
         protected void GridView1_SelectedIndexChanged(object sender, EventArgs e)
         {
+           
+            GridView1.EditIndex = -1;
 
         }
 
@@ -115,16 +120,38 @@ namespace DataListExample
             SqlCommand cmd = new SqlCommand(query1, con);
             cmd.CommandType = CommandType.StoredProcedure;
             HiddenField1.Visible = true;
-            HiddenField1.Value = "Insert";
+            //if update Button is Pressed
+
+            if (Button1.Text == "Update")
+            {
+                int id2 =int.Parse((id1.Text).ToString()); 
+              HiddenField1.Value = "Update";
+              cmd.Parameters.AddWithValue("@Action", HiddenField1.Value.ToString());
+              cmd.Parameters.AddWithValue("@Name", name.Text.ToString());
+              cmd.Parameters.AddWithValue("@Mobile", mobile.Text.ToString());
+              cmd.Parameters.AddWithValue("@Class", DropDownList1.SelectedValue.ToString());
+              cmd.Parameters.AddWithValue("@Year", DropDownList2.SelectedValue.ToString());
+              cmd.Parameters.AddWithValue("@ID", SqlDbType.Int).Value = id2;
+              Button1.Text = "Submit";
+              showOnSuccess.Visible = true;
+              showOnSuccess.Text = "Succesfully saved";
+
+            }
             //HiddenField1.Value =;
-            cmd.Parameters.AddWithValue("@Action", HiddenField1.Value.ToString());
-            cmd.Parameters.AddWithValue("@Name", name.Text.ToString());
-            cmd.Parameters.AddWithValue("@Mobile", mobile.Text.ToString());
-            cmd.Parameters.AddWithValue("@Class", DropDownList1.SelectedValue.ToString());
-            cmd.Parameters.AddWithValue("@Year", DropDownList2.SelectedValue.ToString());
+            else
+            {
+                HiddenField1.Value = "Insert";
+                cmd.Parameters.AddWithValue("@Action", HiddenField1.Value.ToString());
+                cmd.Parameters.AddWithValue("@Name", name.Text.ToString());
+                cmd.Parameters.AddWithValue("@Mobile", mobile.Text.ToString());
+                cmd.Parameters.AddWithValue("@Class", DropDownList1.SelectedValue.ToString());
+                cmd.Parameters.AddWithValue("@Year", DropDownList2.SelectedValue.ToString());
+                showOnSuccess.Visible = true;
+                showOnSuccess.Text = "Succesfully saved"; 
+
+            }
             cmd.ExecuteNonQuery();
-            showOnSuccess.Visible = true;
-            showOnSuccess.Text = "Succesfully saved";
+           
             gbind();
             con.Close();
 
@@ -138,6 +165,29 @@ namespace DataListExample
             DropDownList2.ClearSelection();
 
         }
+
+        protected void GridView1_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+            if (e.CommandName == "Edit")
+            {
+                int index = Convert.ToInt32(e.CommandArgument);
+                GridViewRow gr = GridView1.Rows[index];
+                
+                string id = gr.Cells[1].Text;
+                id1.Text = id;
+                name.Text = gr.Cells[2].Text;
+                mobile.Text = gr.Cells[3].Text;
+                DropDownList1.Text = gr.Cells[4].Text;
+                DropDownList2.Text = gr.Cells[5].Text;
+                Button1.Text = "Update";
+
+               
+            }
+
+            gbind();
+        }
+
+
 
         
        

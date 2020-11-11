@@ -51,6 +51,7 @@
         <asp:Button ID="Button2" runat="server" Text="Clear" style="margin-left: 0px" Width="73px" OnClick="Button2_Click" />
         
         <br />
+        <asp:Label ID="id1" runat="server" Text="" Visible="false"/>
 
         <asp:Label ID="showOnSuccess" runat="server" Text="" Visible="false" BackColor="GreenYellow"></asp:Label>
     <hr  color=red size=5 width='100%' />
@@ -67,9 +68,9 @@
            
             <br />
            <asp:GridView ID="GridView1" runat="server" DataKeyNames ="ID" OnRowEditing ="GridView1_RowEditing"  BorderColor="Yellow" BackColor="#FFCCFF"              
-        OnRowCancelingEdit ="GridView1_RowCancelingEdit"    OnRowDeleting ="GridView1_RowDeleting"    OnRowUpdating = "GridView1_RowUpdating" OnSelectedIndexChanged="GridView1_SelectedIndexChanged"  PageSize="10" >
+        OnRowCancelingEdit ="GridView1_RowCancelingEdit"    OnRowDeleting ="GridView1_RowDeleting" OnRowCommand="GridView1_RowCommand"  OnSelectedIndexChanged="GridView1_SelectedIndexChanged"  PageSize="10" >
                <Columns>
-                   <asp:CommandField ShowDeleteButton="True" ShowEditButton="True" />
+                   <asp:CommandField ShowDeleteButton="True" ShowEditButton="True"  />
                </Columns>
 </asp:GridView>  
            

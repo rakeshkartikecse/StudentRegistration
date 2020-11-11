@@ -40,6 +40,7 @@ namespace DataListExample
 
         protected void login_Click(object sender, EventArgs e)
         {
+            Response.Redirect("Login.aspx");
             
         }
     }
