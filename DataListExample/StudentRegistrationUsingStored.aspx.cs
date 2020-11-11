@@ -49,12 +49,7 @@ namespace DataListExample
 
         
 
-        protected void GridView1_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
-        {
-            GridView1.EditIndex = -1;
-
-            gbind();
-        }
+        
 
         protected void GridView1_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
@@ -69,42 +64,17 @@ namespace DataListExample
             cmd.ExecuteNonQuery();
             showOnSuccess.Visible = true;
             showOnSuccess.Text = "Data Deleted Successfully";
+            
             con.Close();
+            GridView1.EditIndex = -1;
             gbind();
+           
             
 
 
         }
 
-       /* protected void GridView1_RowUpdating(object sender, GridViewUpdateEventArgs e)
-        {
-            int id=int.Parse(GridView1.DataKeys[e.RowIndex].Value.ToString());
-            HiddenField1.Value = "Update";
-            con.Open();
-            cmd = new SqlCommand(query1, con);
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.AddWithValue("@Action", HiddenField1.Value.ToString());
-            /*cmd.Parameters.AddWithValue("@Name", ((TextBox)GridView1.Rows[e.RowIndex].Cells[2].Controls[0]).Text.ToString());
-            cmd.Parameters.AddWithValue("Mobile", ((TextBox)GridView1.Rows[e.RowIndex].Cells[3].Controls[0]).Text.ToString());
-            cmd.Parameters.AddWithValue("Class", ((TextBox)GridView1.Rows[e.RowIndex].Cells[4].Controls[0]).Text.ToString());
-            cmd.Parameters.AddWithValue("Year", ((TextBox)GridView1.Rows[e.RowIndex].Cells[5].Controls[0]).Text.ToString());*/
-         /*   cmd.Parameters.AddWithValue("ID", SqlDbType.Int).Value = id;
-            name.Text = ((TextBox)GridView1.Rows[e.RowIndex].Cells[2].Controls[0]).Text.ToString();
-            mobile.Text = ((TextBox)GridView1.Rows[e.RowIndex].Cells[3].Controls[0]).Text.ToString();
-            DropDownList1.Text = ((TextBox)GridView1.Rows[e.RowIndex].Cells[4].Controls[0]).Text.ToString();
-            DropDownList2.Text = ((TextBox)GridView1.Rows[e.RowIndex].Cells[5].Controls[0]).Text.ToString();
-            cmd.Parameters.AddWithValue("@Name", name.Text);
-            cmd.Parameters.AddWithValue("@Mobile", mobile.Text);
-            cmd.Parameters.AddWithValue("@Class", DropDownList1.SelectedValue.ToString());
-            cmd.Parameters.AddWithValue("@Year", DropDownList2.SelectedValue.ToString());
-
-            cmd.ExecuteNonQuery();
-            con.Close();
-            showOnSuccess.Visible = true;
-            showOnSuccess.Text = "Sucessfully updatedd!";
-            GridView1.EditIndex = -1;
-            gbind();
-        }*/
+      
 
         protected void GridView1_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -134,7 +104,8 @@ namespace DataListExample
               cmd.Parameters.AddWithValue("@ID", SqlDbType.Int).Value = id2;
               Button1.Text = "Submit";
               showOnSuccess.Visible = true;
-              showOnSuccess.Text = "Succesfully saved";
+              showOnSuccess.Text = "Succesfully Updated";
+              clearDataFromForm();
 
             }
             //HiddenField1.Value =;
@@ -151,10 +122,19 @@ namespace DataListExample
 
             }
             cmd.ExecuteNonQuery();
-           
+            
             gbind();
+            GridView1.EditIndex = -1;
             con.Close();
 
+        }
+
+        private void clearDataFromForm()
+        {
+            name.Text = "";
+            mobile.Text = "";
+            DropDownList1.ClearSelection();
+            DropDownList2.ClearSelection();
         }
 
         protected void Button2_Click(object sender, EventArgs e)
@@ -184,6 +164,37 @@ namespace DataListExample
                
             }
 
+            gbind();
+        }
+
+        protected void GridView1_RowUpdating(object sender, GridViewUpdateEventArgs e)
+        {
+
+            try
+            {
+                Response.Write("Can't update from here");
+                gbind();
+
+            }
+            catch
+            {
+                Response.Write("Can't update from here");
+            }
+            finally
+            {
+                Response.Write("Can't update from here");
+            }
+        }
+
+        protected void GridView1_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
+        {
+            GridView1.EditIndex = -1;
+            gbind();
+        }
+
+        protected void GridView1_RowUpdating1(object sender, GridViewUpdateEventArgs e)
+        {
+            GridView1.EditIndex = -1;
             gbind();
         }
 
