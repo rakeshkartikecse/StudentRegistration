@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="DataListExample.DataGridExample" Collapsed="true">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAAAAAAAAAAAAAAAAAAAAAIAAQAAAAAAAAAAIAAAA=</HashCode>
+      <FileName>DataGridExample.aspx.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DataListExample.DataListExample" Collapsed="true">
+    <Position X="2.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAIAAQAAAAAAAAAAIAAIA=</HashCode>
+      <FileName>DataListExample.aspx.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DataListExample.datalistForm" Collapsed="true">
+    <Position X="4" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAIAAIA=</HashCode>
+      <FileName>datalistForm.aspx.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DataListExample.Login" Collapsed="true">
+    <Position X="0.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAgEAAAAAQAAAAAAQAAIAQQAAAAAAAAAAIAAAA=</HashCode>
+      <FileName>Login.aspx.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DataListExample.Registration" Collapsed="true">
+    <Position X="2.25" Y="1.5" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+      <Compartment Name="Methods" Collapsed="true" />
+      <Compartment Name="Events" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAAQAAAAAgQgBEQhAAAAAwAAIgAEAGAAEAAAggIAEgE=</HashCode>
+      <FileName>Registration.aspx.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DataListExample.StudentReg" Collapsed="true">
+    <Position X="4" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAEAAAAAA4ABAAAAAAAZgAIAAEYAAEAAAAgAIgAAA=</HashCode>
+      <FileName>StudentReg.aspx.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DataListExample.StudentRegistrationUsingStored" Collapsed="true">
+    <Position X="0.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QICIAAAABAA4ABQAAAAAAZgAIAAkYAAEAAQIgAIgAhA=</HashCode>
+      <FileName>StudentRegistrationUsingStored.aspx.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="System.Web.UI.Page" Collapsed="true">
+    <Position X="6.25" Y="0.75" Width="1.5" />
+    <TypeIdentifier />
+    <Lollipop Position="0.2" />
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

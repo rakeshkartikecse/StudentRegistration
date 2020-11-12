@@ -14,6 +14,8 @@ namespace DataListExample
     {
         SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["StudentDb"].ConnectionString);
         SqlCommand cmd;
+
+        public event EventHandler Event;
         
         protected void Page_Load(object sender, EventArgs e)
         {

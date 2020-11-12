@@ -15,7 +15,7 @@ namespace DataListExample
         SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["StudentDb"].ConnectionString);
         SqlDataAdapter dtr;
         SqlCommand cmd;
-        DataTable dt = new DataTable();
+        DataTable dt;
         string query1 = "StudentRegister";
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -29,10 +29,10 @@ namespace DataListExample
         {
             string query="select * from StudentDetails1";
             dtr = new SqlDataAdapter(query, con);
+            dt = new DataTable();
             dtr.Fill(dt);
             GridView1.DataSource = dt;
             GridView1.DataBind();
-                
         }
         protected void GridView1_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
@@ -54,20 +54,24 @@ namespace DataListExample
         protected void GridView1_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
             con.Open();
-            int id = int.Parse(GridView1.DataKeys[e.RowIndex].Value.ToString());
+            
             HiddenField1.Value = "Delete";
             cmd = new SqlCommand(query1, con);
             cmd.CommandType = CommandType.StoredProcedure;
-
+            int id = int.Parse(GridView1.DataKeys[e.RowIndex].Value.ToString());
             cmd.Parameters.AddWithValue("@Action", HiddenField1.Value.ToString());
-            cmd.Parameters.AddWithValue("@ID", SqlDbType.Int).Value = id;
+            cmd.Parameters.AddWithValue("@ID", SqlDbType.Int).Value=id;
             cmd.ExecuteNonQuery();
             showOnSuccess.Visible = true;
             showOnSuccess.Text = "Data Deleted Successfully";
-            
+
             con.Close();
-            GridView1.EditIndex = -1;
+            //GridView1.EditIndex = -1;
+
             gbind();
+            
+            
+            
            
             
 
@@ -92,7 +96,7 @@ namespace DataListExample
             HiddenField1.Visible = true;
             //if update Button is Pressed
 
-            if (Button1.Text == "Update")
+            if (Button1.Text.Trim() == "Update")
             {
                 int id2 =int.Parse((id1.Text).ToString()); 
               HiddenField1.Value = "Update";
@@ -122,9 +126,8 @@ namespace DataListExample
 
             }
             cmd.ExecuteNonQuery();
-            
-            gbind();
-            GridView1.EditIndex = -1;
+             GridView1.EditIndex = -1;
+             gbind();
             con.Close();
 
         }
@@ -159,7 +162,7 @@ namespace DataListExample
                 mobile.Text = gr.Cells[3].Text;
                 DropDownList1.Text = gr.Cells[4].Text;
                 DropDownList2.Text = gr.Cells[5].Text;
-                Button1.Text = "Update";
+                Button1.Text = "Update ";
 
                
             }
