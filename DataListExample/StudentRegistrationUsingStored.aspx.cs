@@ -34,6 +34,11 @@ namespace DataListExample
             GridView1.DataSource = dt;
             GridView1.DataBind();
         }
+
+
+
+        //check for whether username and mobile exists already
+        
         protected void GridView1_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
             GridView1.PageIndex = e.NewPageIndex;
@@ -96,40 +101,75 @@ namespace DataListExample
             HiddenField1.Visible = true;
             //if update Button is Pressed
 
-            if (Button1.Text.Trim() == "Update")
+            //check for Empty field
+            if ((name.Text.Trim().ToString().Equals("")) && (mobile.Text.Trim().ToString().Equals("")))
             {
-                int id2 =int.Parse((id1.Text).ToString()); 
-              HiddenField1.Value = "Update";
-              cmd.Parameters.AddWithValue("@Action", HiddenField1.Value.ToString());
-              cmd.Parameters.AddWithValue("@Name", name.Text.ToString());
-              cmd.Parameters.AddWithValue("@Mobile", mobile.Text.ToString());
-              cmd.Parameters.AddWithValue("@Class", DropDownList1.SelectedValue.ToString());
-              cmd.Parameters.AddWithValue("@Year", DropDownList2.SelectedValue.ToString());
-              cmd.Parameters.AddWithValue("@ID", SqlDbType.Int).Value = id2;
-              Button1.Text = "Submit";
-              showOnSuccess.Visible = true;
-              showOnSuccess.Text = "Succesfully Updated";
-              clearDataFromForm();
-
+                Response.Write("Please don't allow null value");
             }
-            //HiddenField1.Value =;
+
             else
             {
-                HiddenField1.Value = "Insert";
-                cmd.Parameters.AddWithValue("@Action", HiddenField1.Value.ToString());
-                cmd.Parameters.AddWithValue("@Name", name.Text.ToString());
-                cmd.Parameters.AddWithValue("@Mobile", mobile.Text.ToString());
-                cmd.Parameters.AddWithValue("@Class", DropDownList1.SelectedValue.ToString());
-                cmd.Parameters.AddWithValue("@Year", DropDownList2.SelectedValue.ToString());
-                showOnSuccess.Visible = true;
-                showOnSuccess.Text = "Succesfully saved"; 
+                if (Button1.Text.Trim() == "Update")
+                {
+                    int id2 = int.Parse((id1.Text).ToString());
+                    HiddenField1.Value = "Update";
+                    cmd.Parameters.AddWithValue("@Action", HiddenField1.Value.ToString());
+                    cmd.Parameters.AddWithValue("@Name", name.Text.ToString());
+                    cmd.Parameters.AddWithValue("@Mobile", mobile.Text.ToString());
+                    cmd.Parameters.AddWithValue("@Class", DropDownList1.SelectedValue.ToString());
+                    cmd.Parameters.AddWithValue("@Year", DropDownList2.SelectedValue.ToString());
+                    cmd.Parameters.AddWithValue("@ID", SqlDbType.Int).Value = id2;
+                    Button1.Text = "Submit";
+                    showOnSuccess.Visible = true;
+                    showOnSuccess.Text = "Succesfully Updated";
+                    //clearDataFromForm();
 
+                }
+                //HiddenField1.Value =;
+                else
+                {
+                    HiddenField1.Value = "Insert";
+                    cmd.Parameters.AddWithValue("@Action", HiddenField1.Value.ToString());
+                    cmd.Parameters.AddWithValue("@Name", name.Text.ToString());
+                    cmd.Parameters.AddWithValue("@Mobile", mobile.Text.ToString());
+                    cmd.Parameters.AddWithValue("@Class", DropDownList1.SelectedValue.ToString());
+                    cmd.Parameters.AddWithValue("@Year", DropDownList2.SelectedValue.ToString());
+                    showOnSuccess.Visible = true;
+
+                    showOnSuccess.Text = "Succesfully saved";
+
+                }
+                string p1 = name.Text.Trim().ToString();
+                string p2 = mobile.Text.Trim().ToString(); ;
+                //Checking for duplicates in database
+                if (checkDuplicates(p1, p2))
+                {
+                    Response.Write("Username and mobile number already Exists");
+                }
+                else
+                {
+                    cmd.ExecuteNonQuery();
+                    clearDataFromForm();
+                    GridView1.EditIndex = -1;
+                    gbind();
+                    con.Close();
+                }
             }
-            cmd.ExecuteNonQuery();
-             GridView1.EditIndex = -1;
-             gbind();
-            con.Close();
 
+        }
+
+        private bool checkDuplicates(string p1, string p2)
+        {
+            //throw new NotImplementedException();
+            string Name = p1;
+            string Mobile = p2;
+            var cmd = new SqlCommand("select count(ID) from StudentDetails1 where Name=@Name or Mobile=@Mobile", con);
+            cmd.Parameters.AddWithValue("@Name", p1.ToString());
+            cmd.Parameters.AddWithValue("@Mobile", p2.ToString());
+           // con.Open();
+            int i = (int)cmd.ExecuteScalar();
+            //con.Close();
+            return i > 0;
         }
 
         private void clearDataFromForm()
@@ -142,6 +182,8 @@ namespace DataListExample
 
         protected void Button2_Click(object sender, EventArgs e)
         {
+           // e.ToString();
+            Response.Write(e.ToString());
             name.Text = "";
             mobile.Text = "";
             DropDownList1.ClearSelection();
@@ -151,21 +193,23 @@ namespace DataListExample
 
         protected void GridView1_RowCommand(object sender, GridViewCommandEventArgs e)
         {
+            
             if (e.CommandName == "Edit")
             {
                 int index = Convert.ToInt32(e.CommandArgument);
                 GridViewRow gr = GridView1.Rows[index];
                 
-                string id = gr.Cells[1].Text;
+                string id = gr.Cells[2].Text;
                 id1.Text = id;
-                name.Text = gr.Cells[2].Text;
-                mobile.Text = gr.Cells[3].Text;
-                DropDownList1.Text = gr.Cells[4].Text;
-                DropDownList2.Text = gr.Cells[5].Text;
+                name.Text = gr.Cells[3].Text;
+                mobile.Text = gr.Cells[4].Text;
+                DropDownList1.Text = gr.Cells[5].Text;
+                DropDownList2.Text = gr.Cells[6].Text;
                 Button1.Text = "Update ";
 
                
             }
+            
 
             gbind();
         }
@@ -199,6 +243,14 @@ namespace DataListExample
         {
             GridView1.EditIndex = -1;
             gbind();
+        }
+
+        protected void GridView1_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.DataRow && e.Row.RowIndex != GridView1.EditIndex)
+            {
+                (e.Row.Cells[0].Controls[0] as LinkButton).Attributes["onclick"] = "return confirm('Do you want to delete this row?');";
+            }
         }
 
 
