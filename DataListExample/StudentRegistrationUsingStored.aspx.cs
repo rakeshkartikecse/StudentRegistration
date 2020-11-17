@@ -49,11 +49,23 @@ namespace DataListExample
 
         protected void GridView1_RowEditing(object sender, GridViewEditEventArgs e)
         {
-           
-                Response.Write("Do Nothi8ng");
-            GridView1.EditIndex = e.NewEditIndex;
-            gbind();
-           
+            try
+            {
+               
+               //GridView1.EditIndex = e.NewEditIndex;
+                GridView1.EditIndex = -1;
+            }
+            catch (Exception ex)
+            {
+                Response.Write(ex);
+            }
+            finally
+            {
+                Response.Write("Do nothing");
+                gbind();
+            }
+            
+
         }
 
         
@@ -131,7 +143,6 @@ namespace DataListExample
                     cmd.Parameters.AddWithValue("@Class", DropDownList1.SelectedValue.ToString());
                     cmd.Parameters.AddWithValue("@Year", DropDownList2.SelectedValue.ToString());
                     cmd.Parameters.AddWithValue("@ID", SqlDbType.Int).Value = id2;
-                    Button1.Text = "Submit";
                     showOnSuccess.Visible = true;
                     showOnSuccess.Text = "Succesfully Updated";
                   
@@ -167,17 +178,18 @@ namespace DataListExample
                 {
                     cmd.ExecuteNonQuery();
                     clearDataFromForm();
-                    GridView1.EditIndex = -1;
-                    gbind();
+                   
                     con.Close();
                 }
             }
+           GridView1.EditIndex = -1;
+           gbind();
 
         }
 
         private bool checkEmptyField()
         {
-            if ((name.Text.Trim().ToString().Equals("")) && (mobile.Text.Trim().ToString().Equals("")) && (DropDownList1.SelectedValue.Trim().ToString().Equals("-----")))
+            if ((name.Text.Trim().ToString().Equals("")) || (mobile.Text.Trim().ToString().Equals("")) || (DropDownList1.SelectedValue.Trim().ToString().Equals("-----")))
             {
                
               
@@ -217,6 +229,8 @@ namespace DataListExample
             mobile.Text = "";
             DropDownList1.ClearSelection();
             DropDownList2.ClearSelection();
+            Button1.Text = "Submit".Trim();
+
 
         }
 
@@ -236,47 +250,10 @@ namespace DataListExample
                 DropDownList1.Text = gr.Cells[5].Text;
                 DropDownList2.Text = gr.Cells[6].Text;
                 Button1.Text = "Update ";
-
-               
             }
-            
-            
-
-            gbind();
+            //gbind();
         }
 
-        protected void GridView1_RowUpdating(object sender, GridViewUpdateEventArgs e)
-        {
-
-            try
-            {
-                Response.Write("Can't update from here");
-                gbind();
-
-            }
-            catch
-            {
-                Response.Write("Can't update from here");
-            }
-            finally
-            {
-                Response.Write("Can't update from here");
-                GridView1.EditIndex = -1;
-                gbind();
-            }
-        }
-
-        protected void GridView1_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
-        {
-            GridView1.EditIndex = -1;
-            gbind();
-        }
-
-        protected void GridView1_RowUpdating1(object sender, GridViewUpdateEventArgs e)
-        {
-            GridView1.EditIndex = -1;
-            gbind();
-        }
     
     }
 }
