@@ -12,6 +12,7 @@ namespace DataListExample
 {
     public partial class StudentRegistrationUsingStored : System.Web.UI.Page
     {
+       
         SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["StudentDb"].ConnectionString);
         SqlDataAdapter dtr;
         SqlCommand cmd;
@@ -48,8 +49,11 @@ namespace DataListExample
 
         protected void GridView1_RowEditing(object sender, GridViewEditEventArgs e)
         {
-           // GridView1.EditIndex = e.NewEditIndex;
-            //gbind();
+           
+                Response.Write("Do Nothi8ng");
+            GridView1.EditIndex = e.NewEditIndex;
+            gbind();
+           
         }
 
         
@@ -59,28 +63,34 @@ namespace DataListExample
         protected void GridView1_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
             con.Open();
-            
-            HiddenField1.Value = "Delete";
-            cmd = new SqlCommand(query1, con);
-            cmd.CommandType = CommandType.StoredProcedure;
-            int id = int.Parse(GridView1.DataKeys[e.RowIndex].Value.ToString());
-            cmd.Parameters.AddWithValue("@Action", HiddenField1.Value.ToString());
-            cmd.Parameters.AddWithValue("@ID", SqlDbType.Int).Value=id;
-            cmd.ExecuteNonQuery();
-            showOnSuccess.Visible = true;
-            showOnSuccess.Text = "Data Deleted Successfully";
+            var cmd1 = new SqlCommand("select count(*) from StudentDetails1", con);
+            int i = (int)cmd1.ExecuteScalar();
+            //check weather database is empty or not
+            if (i > 20)
+            {
+
+                HiddenField1.Value = "Delete";
+                cmd = new SqlCommand(query1, con);
+
+
+                cmd.CommandType = CommandType.StoredProcedure;
+                int id = int.Parse(GridView1.DataKeys[e.RowIndex].Value.ToString());
+                cmd.Parameters.AddWithValue("@Action", HiddenField1.Value.ToString());
+                cmd.Parameters.AddWithValue("@ID", SqlDbType.Int).Value = id;
+                cmd.ExecuteNonQuery();
+                showOnSuccess.Visible = true;
+                showOnSuccess.Text = "Data Deleted Successfully";
+ 
+            }
+
+            else
+            {
+                Response.Write("You Dont have sufficient Records to delete!");
+            }
 
             con.Close();
-            //GridView1.EditIndex = -1;
-
             gbind();
             
-            
-            
-           
-            
-
-
         }
 
       
@@ -94,6 +104,7 @@ namespace DataListExample
 
         protected void Button1_Click(object sender, EventArgs e)
         {
+            gbind();
             con.Open();
             //string query1 = "StudentRegister";
             SqlCommand cmd = new SqlCommand(query1, con);
@@ -102,10 +113,11 @@ namespace DataListExample
             //if update Button is Pressed
 
             //check for Empty field
-            if ((name.Text.Trim().ToString().Equals("")) && (mobile.Text.Trim().ToString().Equals("")))
-            {
-                Response.Write("Please don't allow null value");
-            }
+           if(checkEmptyField()){
+               Response.Write("Please don't allow null value");
+               showOnSuccess.Visible = true;
+               showOnSuccess.Text = "Please don't allow null value";
+           }
 
             else
             {
@@ -122,8 +134,7 @@ namespace DataListExample
                     Button1.Text = "Submit";
                     showOnSuccess.Visible = true;
                     showOnSuccess.Text = "Succesfully Updated";
-                    //clearDataFromForm();
-
+                  
                 }
                 //HiddenField1.Value =;
                 else
@@ -138,6 +149,9 @@ namespace DataListExample
 
                     showOnSuccess.Text = "Succesfully saved";
 
+                   
+                   
+
                 }
                 string p1 = name.Text.Trim().ToString();
                 string p2 = mobile.Text.Trim().ToString(); ;
@@ -145,6 +159,9 @@ namespace DataListExample
                 if (checkDuplicates(p1, p2))
                 {
                     Response.Write("Username and mobile number already Exists");
+                    showOnSuccess.Visible = true;
+                    showOnSuccess.Text = "Username and mobile number already Exists";
+                    //clearDataFromForm();
                 }
                 else
                 {
@@ -156,6 +173,17 @@ namespace DataListExample
                 }
             }
 
+        }
+
+        private bool checkEmptyField()
+        {
+            if ((name.Text.Trim().ToString().Equals("")) && (mobile.Text.Trim().ToString().Equals("")) && (DropDownList1.SelectedValue.Trim().ToString().Equals("-----")))
+            {
+               
+              
+                return true;
+            }
+            return false;
         }
 
         private bool checkDuplicates(string p1, string p2)
@@ -178,6 +206,7 @@ namespace DataListExample
             mobile.Text = "";
             DropDownList1.ClearSelection();
             DropDownList2.ClearSelection();
+            gbind();
         }
 
         protected void Button2_Click(object sender, EventArgs e)
@@ -196,6 +225,7 @@ namespace DataListExample
             
             if (e.CommandName == "Edit")
             {
+                Response.Write("Entered into Edit Row Command");
                 int index = Convert.ToInt32(e.CommandArgument);
                 GridViewRow gr = GridView1.Rows[index];
                 
@@ -209,6 +239,7 @@ namespace DataListExample
 
                
             }
+            
             
 
             gbind();
@@ -230,6 +261,8 @@ namespace DataListExample
             finally
             {
                 Response.Write("Can't update from here");
+                GridView1.EditIndex = -1;
+                gbind();
             }
         }
 
@@ -244,18 +277,6 @@ namespace DataListExample
             GridView1.EditIndex = -1;
             gbind();
         }
-
-        protected void GridView1_RowDataBound(object sender, GridViewRowEventArgs e)
-        {
-            if (e.Row.RowType == DataControlRowType.DataRow && e.Row.RowIndex != GridView1.EditIndex)
-            {
-                (e.Row.Cells[0].Controls[0] as LinkButton).Attributes["onclick"] = "return confirm('Do you want to delete this row?');";
-            }
-        }
-
-
-
-        
-       
+    
     }
 }
