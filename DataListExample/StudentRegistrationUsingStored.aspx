@@ -5,6 +5,10 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title></title>
+    <script type="text/javascript" src="Scripts/jquery-3.5.1.intellisense.js">
+
+      
+    </script>
 </head>
 <body>
     <form id="form1" runat="server">
@@ -14,10 +18,13 @@
             <br />
 
             <asp:Label ID="label1" runat="server" Text="Name"></asp:Label>
-            <asp:TextBox ID="name" runat="server" Width="113px"></asp:TextBox>
+            <asp:TextBox ID="name" runat="server" Width="113px" MaxLength="25"></asp:TextBox>
 
             <asp:Label ID="label2" runat="server" Text="Mobile"></asp:Label>
-            <asp:TextBox ID="mobile" runat="server"></asp:TextBox>
+            <asp:TextBox ID="mobile" runat="server" MaxLength="10"></asp:TextBox>
+            <asp:RegularExpressionValidator ID="RegularExpressionValidator1" runat="server"
+                ControlToValidate="mobile" ErrorMessage="Please Enter Valid Mobile Number" BackColor="Red"
+                ValidationExpression="[0-9]{10}"></asp:RegularExpressionValidator>
             <br />
             <br />
             <br />
@@ -70,7 +77,7 @@
 
             <br />
             <asp:GridView ID="GridView1" runat="server" DataKeyNames="ID" BorderColor="Yellow" BackColor="#FFCCFF" OnRowDeleting="GridView1_RowDeleting" OnRowEditing="GridView1_RowEditing"
-                OnRowCommand="GridView1_RowCommand" AutoGenerateColumns="false"  OnSelectedIndexChanged="GridView1_SelectedIndexChanged" PageSize="50" OnPageIndexChanging="GridView1_PageIndexChanging">
+                OnRowCommand="GridView1_RowCommand" AutoGenerateColumns="false" OnSelectedIndexChanged="GridView1_SelectedIndexChanged" PageSize="50" OnPageIndexChanging="GridView1_PageIndexChanging">
                 <Columns>
 
 
@@ -80,8 +87,8 @@
                         </ItemTemplate>
                     </asp:TemplateField>
 
-                    <asp:ButtonField ButtonType="Link" 
-                        CommandName="Edit" 
+                    <asp:ButtonField ButtonType="Link"
+                        CommandName="Edit"
                         Text="Edit" />
                     <asp:BoundField DataField="ID" HeaderText="Id" />
                     <asp:BoundField DataField="Name" HeaderText="Name" />

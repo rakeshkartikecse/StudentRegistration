@@ -52,16 +52,16 @@ namespace DataListExample
             try
             {
                
-               //GridView1.EditIndex = e.NewEditIndex;
+               
                 GridView1.EditIndex = -1;
             }
             catch (Exception ex)
             {
-                Response.Write(ex);
+                Response.Write(ex.Message);
             }
             finally
             {
-                Response.Write("Do nothing");
+                
                 gbind();
             }
             
@@ -172,7 +172,7 @@ namespace DataListExample
                     Response.Write("Username and mobile number already Exists");
                     showOnSuccess.Visible = true;
                     showOnSuccess.Text = "Username and mobile number already Exists";
-                    //clearDataFromForm();
+                    
                 }
                 else
                 {
@@ -206,9 +206,9 @@ namespace DataListExample
             var cmd = new SqlCommand("select count(ID) from StudentDetails1 where Name=@Name or Mobile=@Mobile", con);
             cmd.Parameters.AddWithValue("@Name", p1.ToString());
             cmd.Parameters.AddWithValue("@Mobile", p2.ToString());
-           // con.Open();
+           
             int i = (int)cmd.ExecuteScalar();
-            //con.Close();
+           
             return i > 0;
         }
 
@@ -251,7 +251,7 @@ namespace DataListExample
                 DropDownList2.Text = gr.Cells[6].Text;
                 Button1.Text = "Update ";
             }
-            //gbind();
+           
         }
 
     
